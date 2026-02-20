@@ -1,10 +1,33 @@
-# ShulkerBoxPreview
+# mcpelauncher-shulkerboxpreview
 
-This mod currently **only supports Minecraft Bedrock version 1.21.114**.  
-Using it on other versions may result in crashes or undefined behavior.
+A mod for [mcpelauncher](https://github.com/minecraft-linux/mcpelauncher-manifest) that adds shulker box content previews.
 
-## Known limitations
-- Shulker box **item icons are not working yet**.
+This mod currently supports **Minecraft Bedrock 1.21.114**.
+
+## Usage
+Create a `mods` directory in your mcpelauncher profile (for example `~/.local/share/mcpelauncher/mods`) if you do not already have one.
+Place `libshulke.so` in that `mods` directory, then launch the game
+Hover a shulker box item tooltip and press `H` to toggle the preview panel.
+
+## Building
+
+Prerequisites:
+
+- Android NDK r27 or later. [Download](https://developer.android.com/ndk/downloads)
+- CMake 3.10 or later
+
+Replace `/path/to/ndk` with your Android NDK path:
+
+```bash
+cmake -S . -B build \
+  -DCMAKE_TOOLCHAIN_FILE=/path/to/ndk/build/cmake/android.toolchain.cmake \
+  -DANDROID_ABI=x86_64 \
+  -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+```
+
+This produces `libshulke.so` in `build/`. Install it as described in [Usage](#usage).
 
 ## Preview
+
 ![ShulkerBox Preview](1.png)

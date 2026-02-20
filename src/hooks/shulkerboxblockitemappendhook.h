@@ -13,6 +13,24 @@ using Shulker_appendHover_t = void (*)(void*, ItemStackBase*, void*, std::string
 
 inline Shulker_appendHover_t ShulkerBoxBlockItem_appendFormattedHovertext_orig = nullptr;
 
+namespace {
+template <std::size_t N>
+inline bool containsTag(void* compound, const char (&key)[N]) {
+    return CompoundTag_contains(compound, key, N - 1);
+}
+
+inline bool hasEnchantmentData(void* compound) {
+    if (!compound || !CompoundTag_contains)
+        return false;
+
+    return containsTag(compound, "ench")
+        || containsTag(compound, "Enchantments")
+        || containsTag(compound, "StoredEnchantments")
+        || containsTag(compound, "minecraft:enchantments")
+        || containsTag(compound, "minecraft:stored_enchantments");
+}
+} // namespace
+
 inline void ShulkerBoxBlockItem_appendFormattedHovertext_hook(
     ShulkerBoxBlockItem* self,
     ItemStackBase* stack,
@@ -39,8 +57,11 @@ inline void ShulkerBoxBlockItem_appendFormattedHovertext_hook(
 
     int index = (reinterpret_cast<uintptr_t>(stack) >> 4) & (SHULKER_CACHE_SIZE - 1);
 
-    for (int i = 0; i < SHULKER_SLOT_COUNT; ++i)
+    for (int i = 0; i < SHULKER_SLOT_COUNT; ++i) {
         ShulkerCache[index][i].valid = false;
+        ShulkerCache[index][i].enchanted = false;
+        ShulkerCache[index][i].count = 0;
+    }
 
     void* list = CompoundTag_getList(stack->mUserData, "Items", 5);
     if (!list)
@@ -62,6 +83,9 @@ inline void ShulkerBoxBlockItem_appendFormattedHovertext_hook(
         ShulkerSlotCache& sc = ShulkerCache[index][slot];
         ItemStackBase_loadItem(asISB(sc.isb), tag);
         sc.count = count;
+        ItemStackBase* loaded = asISB(sc.isb);
+        sc.enchanted = hasEnchantmentData(tag)
+            || (loaded && loaded->mUserData && hasEnchantmentData(loaded->mUserData));
         sc.valid = true;
     }
 

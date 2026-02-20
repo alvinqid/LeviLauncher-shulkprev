@@ -5,6 +5,8 @@
 #include "ui/hashedstring.h"
 #include "ui/nineslicehelper.h"
 #include "ui/resourcelocation.h"
+#include "item/itemstackbase.h"
+#include "render/helper.h"
 #include "util/scache.h"
 
 

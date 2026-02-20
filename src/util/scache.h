@@ -17,8 +17,9 @@ static inline ItemStackBase* asISB(ItemStackBaseOpaque& o) {
 
 struct ShulkerSlotCache {
     ItemStackBaseOpaque isb; // itemcache
-    uint8_t count;          // stable stack size
+    uint8_t count;           // stable stack size
     bool valid;
+    bool enchanted;
 };
 
 extern ShulkerSlotCache ShulkerCache[SHULKER_CACHE_SIZE][SHULKER_SLOT_COUNT];

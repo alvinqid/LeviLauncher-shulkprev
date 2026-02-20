@@ -6,3 +6,4 @@
 #include "item/itemstackbase.h"
 #include "nbt/compoundtag.h"
 #include "nbt/listtag.h"
+#include "render/helper.h"

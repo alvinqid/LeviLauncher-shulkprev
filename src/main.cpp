@@ -10,6 +10,8 @@
 #include <libhat/scanner.hpp>
 
 Item_getId_t Item_getId = nullptr;
+BaseActorRenderContext_ctor_t BaseActorRenderContext_ctor = nullptr;
+ItemRenderer_renderGuiItemNew_t ItemRenderer_renderGuiItemNew = nullptr;
 
 extern "C" [[gnu::visibility("default")]] void mod_preinit() {}
 extern "C" [[gnu::visibility("default")]] void mod_init()
@@ -107,6 +109,18 @@ extern "C" [[gnu::visibility("default")]] void mod_init()
     ); 
     CompoundTag_getByte = 
     reinterpret_cast<CompoundTag_getByte_t>(CtagGetByteAddr);
+
+    auto BaseActorRenderContextCtorAddr = scan(
+        "41 57 41 56 41 55 41 54 53 49 89 D4 49 89 F5 48 89 FB 48 8D 05 27 14 50 0A 48 89 07 0F 57 C0 0F"_sig
+    );
+    BaseActorRenderContext_ctor =
+    reinterpret_cast<BaseActorRenderContext_ctor_t>(BaseActorRenderContextCtorAddr);
+
+    auto ItemRendererRenderGuiItemNewAddr = scan(
+        "55 41 57 41 56 41 55 41 54 53 48 81 EC C8 00 00 00 F3 0F 11 64 24 18 F3 0F 11 5C 24 0C F3 0F 11"_sig
+    );
+    ItemRenderer_renderGuiItemNew =
+    reinterpret_cast<ItemRenderer_renderGuiItemNew_t>(ItemRendererRenderGuiItemNewAddr);
 
     auto textureGroup_getTexturea_addr = scan(
         "55 41 57 41 56 41 55 41 54 53 48 81 EC F8 00 00 00 45 89 CD 4D 89 C7 89 4C 24 0C 49 89 D6 49 89 F4 48 89 7C 24 10 64 48 8B 04 25 28 00 00 00 48"_sig
