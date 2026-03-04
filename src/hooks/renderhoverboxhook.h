@@ -5,7 +5,7 @@
 #include <string>
 
 static bool sPreviewEnabled = false;
-static bool sWasHDown = false;
+static bool sWasToggleKeyDown = false;
 
 using RenderHoverBoxFn = void (*)(void*, MinecraftUIRenderContext*, void*, void*, float);
 
@@ -29,13 +29,13 @@ inline void HoverRenderer_renderHoverBox_hook(
     HoverRenderer_renderHoverBox_orig(selfPtr, ctx, client, aabb, someFloat);
 
     if (!ctx){
-        sWasHDown = false;
+        sWasToggleKeyDown = false;
         return;
     }
 
-    if (!gSP_KeyDown && sWasHDown)
+    if (!spKeyDown && sWasToggleKeyDown)
         sPreviewEnabled = !sPreviewEnabled;
-    sWasHDown = gSP_KeyDown;
+    sWasToggleKeyDown = spKeyDown;
 
     if (!sPreviewEnabled)
         return;

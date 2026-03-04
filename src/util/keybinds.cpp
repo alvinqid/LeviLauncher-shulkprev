@@ -1,4 +1,7 @@
 #include "keybinds.h"
+#include "config.h"
+#include "modmenu.h"
+
 #include <dlfcn.h>
 #include <stdio.h>
 
@@ -9,8 +12,7 @@ inline void (*_gw_add_keyboard_callback)(
     void *user,
     bool (*callback)(void *, int, int));
 
-bool gSP_ToggleMode = false; //useless
-bool gSP_KeyDown = false;  
+bool spKeyDown = false;
 
 void SP_register_keybinds(){
     auto gw = dlopen("libmcpelauncher_gamewindow.so", 0);
@@ -39,17 +41,35 @@ void SP_register_keybinds(){
     _gw_add_window_creation_callback(nullptr, [](void *){
         void* window = _gw_get_primary_window();
 
-        _gw_add_keyboard_callback( window, nullptr, [](void*, int key, int action) -> bool{
-
-                if (key == 72){ // H
-                    if (action == 0) gSP_KeyDown = true;   // press
-                    if (action == 2) gSP_KeyDown = false;  // release
+        _gw_add_keyboard_callback(window, nullptr, [](void*, int key, int action) -> bool{
+            if (spChangingPreviewKey) {
+                if (action == 0) {
+                    spPreviewKey = key;
+                    spKeyDown = false;
+                    SP_showKeybindWindow();
+                    SP_saveConfig();
+                    printf(
+                        "[ShulkerPreview] Preview key set to %s (%d)\n",
+                        SP_keyCodeToString(spPreviewKey).c_str(),
+                        spPreviewKey
+                    );
                 }
-                return false;
+                return true;
             }
-        );
 
-    printf("[ShulkerPreview] Keybind ready (H)\n"); });
+            if (key == spPreviewKey) {
+                if (action == 0)
+                    spKeyDown = true;
+                if (action == 2)
+                    spKeyDown = false;
+            }
+            return false;
+        });
+
+    printf(
+        "[ShulkerPreview] Keybind ready (%s)\n",
+        SP_keyCodeToString(spPreviewKey).c_str()
+    ); });
 
     printf("[ShulkerPreview] Waiting for window...\n");
 }

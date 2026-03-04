@@ -3,6 +3,8 @@
 #include "shulkerenderer/colors.h"
 #include "item/itemstackbase.h"
 #include "util/scache.h"
+#include "util/config.h"
+#include "util/modmenu.h"
 #include "nbt/compoundtag.h"
 #include "nbt/listtag.h"
 #include <string>
@@ -104,7 +106,9 @@ inline void ShulkerBoxBlockItem_appendFormattedHovertext_hook(
 
     char color = getShulkerColorCodeFromItemId(Item_getId(rootItem));
 
-    out += "\n§7Press §eH§7 to toggle preview";
+    out += "\n§7Press §e";
+    out += SP_keyCodeToString(spPreviewKey);
+    out += "§7 to toggle preview";
     out += "\xC2\xA7#";
     out.push_back(color);
     out += "\xC2\xA7v";

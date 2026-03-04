@@ -41,6 +41,9 @@ extern "C" [[gnu::visibility("default")]] void mod_init()
         ((addr = hat::find_pattern(range1, sig, hat::scan_alignment::X16).get()) || ...);
         return addr;
     };
+
+    SP_loadConfig();
+    SP_initModMenu();
     SP_register_keybinds();
 
     // stoff, add wildcards later this is for test 
