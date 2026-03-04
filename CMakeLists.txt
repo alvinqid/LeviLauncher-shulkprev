@@ -48,6 +48,8 @@ add_library(shulke SHARED
     src/ui/nineslicehelper.cpp
     src/shulkerenderer/shulkerrenderer.cpp
     src/util/keybinds.cpp
+    src/util/config.cpp
+    src/util/modmenu.cpp
     src/util/scache.cpp
 )
 

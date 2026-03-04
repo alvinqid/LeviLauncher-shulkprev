@@ -2,6 +2,8 @@
 
 #include <cstdio>
 
+#include "util/config.h"
+
 namespace {
 constexpr int kColumns = 9;
 constexpr int kRows = 3;
@@ -15,6 +17,24 @@ constexpr float kCountTextHeight = 6.0f;
 const HashedString kFlushMaterial("ui_flush");
 const NinesliceHelper kPanelNineSlice(16.0f, 16.0f, 4.0f, 4.0f);
 const mce::Color kWhite{1.0f, 1.0f, 1.0f, 1.0f};
+
+float clamp01(float value) {
+    if (value < 0.0f)
+        return 0.0f;
+    if (value > 1.0f)
+        return 1.0f;
+    return value;
+}
+
+mce::Color applyTintIntensity(const mce::Color& baseTint) {
+    const float intensity = spTintIntensity;
+    return {
+        clamp01(baseTint.r * intensity),
+        clamp01(baseTint.g * intensity),
+        clamp01(baseTint.b * intensity),
+        baseTint.a
+    };
+}
 
 struct CachedUiTextures {
     bool loaded = false;
@@ -268,7 +288,7 @@ void ShulkerRenderer::render(
     if (!ctx || !ActiveUIContext || !ActiveUIFont)
         return;
 
-    const mce::Color tint = getShulkerTint(colorCode);
+    const mce::Color tint = applyTintIntensity(getShulkerTint(colorCode));
     const CachedUiTextures& textures = getUiTextures(*ctx);
 
     const RectangleArea panelRect{

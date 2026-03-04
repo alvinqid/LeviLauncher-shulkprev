@@ -7,8 +7,13 @@ This mod currently supports **Minecraft Bedrock 1.21.114**.
 ## Usage
 Create a `mods` directory in your mcpelauncher profile (for example `~/.local/share/mcpelauncher/mods`) if you do not already have one.
 Place `libshulke.so` in that `mods` directory, then launch the game
-Hover a shulker box item tooltip and press `H` to toggle the preview panel.
+Hover a shulker box item tooltip and press `H` (default) to toggle the preview panel.
 
+From Mods -> `Shulker Preview`, you can:
+- Change the preview keybind
+- Adjust tint intensity (only scales brightness)
+
+  ![Config](2.png)
 ## Building
 
 Prerequisites:
@@ -31,4 +36,3 @@ This produces `libshulke.so` in `build/`. Install it as described in [Usage](#us
 ## Preview
 
 ![ShulkerBox Preview](1.png)
-

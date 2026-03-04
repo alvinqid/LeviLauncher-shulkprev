@@ -7,3 +7,5 @@
 #include "nbt/compoundtag.h"
 #include "nbt/listtag.h"
 #include "render/helper.h"
+#include "util/config.h"
+#include "util/modmenu.h"
