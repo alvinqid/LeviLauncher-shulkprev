@@ -2,7 +2,7 @@
 
 #include <cstddef>
 #include <cstdint>
-#inlude "test.h"
+#include "test.h"
 
 using BaseActorRenderContext_ctor_t = void (*)(void* barc, void* screenContext, void* clientInstance, void* minecraftGame);
 extern BaseActorRenderContext_ctor_t BaseActorRenderContext_ctor;

@@ -1,7 +1,7 @@
 #include "shulkerrenderer.h"
 
 #include <cstdio>
-#inlude "test.h"
+#include "test.h"
 
 //#include "util/config.h"
 float spTintIntensity = 1.0f;
