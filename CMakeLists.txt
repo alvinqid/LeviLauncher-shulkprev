@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
+cmake_policy(SET CMP0079 NEW)
+
 project(shulke)
 
 set(CMAKE_CXX_STANDARD 23)
@@ -51,7 +53,6 @@ FetchContent_Declare(glm
 
 FetchContent_MakeAvailable(
     zydis
-    preloader
     properties-parser
     glm
 )
