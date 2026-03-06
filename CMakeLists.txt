@@ -64,6 +64,9 @@ add_library(shulke SHARED
     src/ui/minecraftuirendercontext.cpp
     src/ui/nineslicehelper.cpp
     src/shulkerenderer/shulkerrenderer.cpp
+    src/api/Hook.cpp
+    src/api/android/Memory.cpp
+    src/api/Encoding.cpp
     src/util/scache.cpp
 )
 
