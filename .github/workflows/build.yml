@@ -2,31 +2,36 @@ name: Build
 
 on:
   push:
-  pull_request:
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
-    
-    - uses: nttld/setup-ndk@v1
-      id: ndk
-      with:
-        ndk-version: r26b
-        
-    - name: Build
-      run: |
-        mkdir build
-        cmake -B build \
-          -DCMAKE_TOOLCHAIN_FILE=${{ steps.ndk.outputs.ndk-path }}/build/cmake/android.toolchain.cmake \
-          -DANDROID_ABI=arm64-v8a \
-          -DANDROID_PLATFORM=android-24 \
-          -DCMAKE_BUILD_TYPE=Release
-        cmake --build build -j$(nproc)
-        
-    - uses: actions/upload-artifact@v4
-      with:
-        name: libshulke
-        path: build/libshulke.so
+      - uses: actions/checkout@v4
+
+      - name: Setup Android NDK
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r26b
+
+      - name: Setup xmake
+        uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: latest
+
+      - name: Configure & Build
+        run: |
+          xmake f -y -p android \
+            -a arm64-v8a \
+            --ndk=$ANDROID_NDK_HOME \
+            --ndk_sdkver=24 \
+            -m release
+          xmake -y -j$(nproc)
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: libShulkerboxPreview
+          path: build/android/arm64-v8a/release/libShulkerboxPreview.so

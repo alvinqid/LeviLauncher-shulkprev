@@ -8,7 +8,7 @@
 #include "item/itemstackbase.h"
 #include "render/helper.h"
 #include "util/scache.h"
-#include "util/config.h"
+//#include "util/config.h"
 #include "item/item.h"
 
 
