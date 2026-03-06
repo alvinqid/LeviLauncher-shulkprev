@@ -97,11 +97,11 @@ inline void ShulkerBoxBlockItem_appendFormattedHovertext_hook(
         color = getShulkerColorCodeFromItemId(id);
     }
     std::string prefix;
-    prefix += "\xC2\xA7";
+    prefix += "§";
     prefix += hex[(index >> 4) & 0xF];
-    prefix += "\xC2\xA7";
+    prefix += "§";
     prefix += hex[index & 0xF];
-    prefix += "\xC2\xA7";
+    prefix += "§";
     prefix += color;
     // prepend so renderer can see it
     out.insert(0, prefix);
@@ -109,5 +109,5 @@ inline void ShulkerBoxBlockItem_appendFormattedHovertext_hook(
     out += "\n§7Press §e";
     out += SP_keyCodeToString(spPreviewKey);
     out += "§7 to toggle preview";
-    out += "\xC2\xA7v";*/
+    out += "§";*/
 }

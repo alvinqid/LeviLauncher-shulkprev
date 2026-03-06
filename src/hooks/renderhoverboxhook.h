@@ -43,7 +43,7 @@ inline void HoverRenderer_renderHoverBox_hook(
     const std::string& text = self->mFilteredContent;
 
     //marker
-    if (text.find("\xC2\xA7v") == std::string::npos)
+    if (text.find("§") == std::string::npos)
         return;
 
     //prefix must contain §H§L§C
